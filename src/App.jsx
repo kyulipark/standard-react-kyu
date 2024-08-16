@@ -77,7 +77,7 @@ function App() {
 
   return (
     <div className="main-container">
-      <h1>2024 올림픽 메달</h1>
+      <h1 className="h1">2024 올림픽 메달</h1>
       <form className="input-group" onSubmit={addCountry}>
         <div className="input-field">
           <label>국가명</label>
@@ -89,8 +89,9 @@ function App() {
               required;
             }}
           />
+        </div>
 
-          {/* <div className="input-field"> */}
+        <div className="input-field">
           <label>금메달</label>
           <input
             onChange={(e) => {
@@ -99,7 +100,8 @@ function App() {
             type="number"
             placeholder="0"
           />
-
+        </div>
+        <div className="input-field">
           <label>은메달</label>
           <input
             onChange={(e) => {
@@ -108,7 +110,8 @@ function App() {
             type="number"
             placeholder="0"
           />
-
+        </div>
+        <div className="input-field">
           <label>동메달</label>
           <input
             onChange={(e) => {
@@ -117,26 +120,27 @@ function App() {
             type="number"
             placeholder="0"
           />
-          <button className="btn" type="submit">
-            국가 추가
-          </button>
-          <button className="btn" onClick={updateCountry}>
-            업데이트
-          </button>
         </div>
+        <button className="btn" type="submit">
+          국가 추가
+        </button>
+        <button className="btn" onClick={updateCountry}>
+          업데이트
+        </button>
       </form>
 
       <table className="table">
         <thead className="thead">
-          <tr>
+          <tr className="tr-top">
             <td>국가명</td>
             <td>금메달</td>
             <td>은메달</td>
             <td>동메달</td>
+            <td>삭제</td>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="tbody">
           {countries.map((country) => {
             return (
               <tr key={country.name}>
@@ -144,13 +148,12 @@ function App() {
                 <td>{country.gold}</td>
                 <td>{country.silver}</td>
                 <td>{country.bronze}</td>
-                <td
+                <button
                   className="delbtn"
-                  type="button"
                   onClick={() => deleteCountry(country.name)}
                 >
                   삭제
-                </td>
+                </button>
               </tr>
             );
           })}
