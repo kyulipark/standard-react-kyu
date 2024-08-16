@@ -9,54 +9,54 @@ function App() {
   const [silverInput, setSilverInput] = useState(0);
   const [bronzeInput, setBronzeInput] = useState(0);
 
-  //국가 추가
-  const addCountry = (e) => {
+  const checkCountry = (e) => {
     e.preventDefault();
-    const exCountry = countries.find((country) => {
+    return countries.find((country) => {
       if (country.name === countryInput) {
         return true;
       } else {
         return false;
       }
     });
-    if (exCountry) {
+  };
+
+  //국가 추가
+  const addCountry = (e) => {
+    if (checkCountry(e)) {
       alert("이미 등록된 국가입니다.");
     } else {
       const newCountry = {
         name: countryInput,
-        gold: goldInput,
-        silver: silverInput,
-        bronze: bronzeInput,
+        gold: goldInput ? parseInt(goldInput) : 0,
+        silver: silverInput ? parseInt(silverInput) : 0,
+        bronze: bronzeInput ? parseInt(bronzeInput) : 0,
       };
-      setCountries([...countries, newCountry]);
+      setCountries([...countries, newCountry].sort((a, b) => b.gold - a.gold));
     }
+    setCountryInput("");
+    setGoldInput("0");
+    setSilverInput("0");
+    setBronzeInput("0");
   };
 
   //업데이트
   const updateCountry = (e) => {
-    e.preventDefault();
-    const exCountry = countries.find((country) => {
-      if (country.name === countryInput) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    if (exCountry) {
+    if (checkCountry(e)) {
       setCountries(
-        countries.map((country) => {
-          if (country.name === countryInput) {
-            return {
-              name: countryInput,
-              gold: goldInput,
-              silver: silverInput,
-              bronze: bronzeInput,
-            };
-          } else {
-            return country;
-          }
-        })
+        countries
+          .map((country) => {
+            if (country.name === countryInput) {
+              return {
+                name: country.name,
+                gold: goldInput,
+                silver: silverInput,
+                bronze: bronzeInput,
+              };
+            } else {
+              return country;
+            }
+          })
+          .sort((a, b) => b.gold - a.gold)
       );
     } else {
       alert("등록되지 않은 국가입니다.");
@@ -85,9 +85,10 @@ function App() {
             onChange={(e) => {
               setCountryInput(e.target.value);
               type = "text";
+              value = { countryInput };
               placeholder = "국가 입력";
-              required;
             }}
+            required
           />
         </div>
 
@@ -98,6 +99,7 @@ function App() {
               setGoldInput(e.target.value);
             }}
             type="number"
+            value={goldInput}
             placeholder="0"
           />
         </div>
@@ -108,6 +110,7 @@ function App() {
               setSilverInput(e.target.value);
             }}
             type="number"
+            value={silverInput}
             placeholder="0"
           />
         </div>
@@ -118,6 +121,7 @@ function App() {
               setBronzeInput(e.target.value);
             }}
             type="number"
+            value={bronzeInput}
             placeholder="0"
           />
         </div>

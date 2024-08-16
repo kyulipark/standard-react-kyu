@@ -31,6 +31,7 @@
 
 .btn {
   background-color: yellow;
+  color: #3d7de7;
 }
 
 .delbtn {
@@ -61,6 +62,9 @@
   background-color: #3d7de7;
   color: #fff;
   font-weight: 700;
+}
+.tbody {
+  color: yellow;
 }
 
 .logo {
